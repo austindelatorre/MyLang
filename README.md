@@ -5,7 +5,7 @@ This is C Language basic emplimentation of Lisp. My long term goal is to turn th
 ### Prompt 
 Simle REPL that repeats the user line input. Uses `editline/readline.h` and `editline/history.h` in order to add usability of the write line. For Mac this requires that you leave out the `editline/history.h` preproceessing line and compile it using `cc -std=c99 -Wall prompt.c -ledit -o prompt`.
 ### Parsing (using MPC)
-This uses the MPC library to parse. Things get complicated here.
+This uses the MPC library to parse. Things get complicated here. Once MPC is in use you need to compile using `cc -std=c99 -Wall parsing.c mpc.c -ledit -lm -o parsing`.
 ### Evaulation
 At this point we are using Polish Notation https://en.wikipedia.org/wiki/Polish_notation.
 ## Sources
