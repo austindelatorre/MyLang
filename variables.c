@@ -1,18 +1,13 @@
-
-
 #include "mpc.h"
-
 #include <editline/readline.h>
 
-/* Forward Declarations */
-
+// Forward Declarations 
 struct lval;
 struct lenv;
 typedef struct lval lval;
 typedef struct lenv lenv;
 
-/* Lisp Value */
-
+// Lisp Value
 enum { LVAL_ERR, LVAL_NUM,   LVAL_SYM, 
        LVAL_FUN, LVAL_SEXPR, LVAL_QEXPR };
 
@@ -28,6 +23,7 @@ struct lval {
   lval** cell;
 };
 
+// Init Num Value
 lval* lval_num(long x) {
   lval* v = malloc(sizeof(lval));
   v->type = LVAL_NUM;
@@ -35,6 +31,7 @@ lval* lval_num(long x) {
   return v;
 }
 
+// Init Error Value
 lval* lval_err(char* fmt, ...) {
   lval* v = malloc(sizeof(lval));
   v->type = LVAL_ERR;
@@ -58,6 +55,7 @@ lval* lval_err(char* fmt, ...) {
   return v;
 }
 
+// Init Symbol Value
 lval* lval_sym(char* s) {
   lval* v = malloc(sizeof(lval));
   v->type = LVAL_SYM;
@@ -66,6 +64,7 @@ lval* lval_sym(char* s) {
   return v;
 }
 
+// Init Function Value
 lval* lval_fun(lbuiltin func) {
   lval* v = malloc(sizeof(lval));
   v->type = LVAL_FUN;
@@ -73,6 +72,7 @@ lval* lval_fun(lbuiltin func) {
   return v;
 }
 
+// Init S-Expression
 lval* lval_sexpr(void) {
   lval* v = malloc(sizeof(lval));
   v->type = LVAL_SEXPR;
@@ -81,6 +81,7 @@ lval* lval_sexpr(void) {
   return v;
 }
 
+// Init Q-Expression
 lval* lval_qexpr(void) {
   lval* v = malloc(sizeof(lval));
   v->type = LVAL_QEXPR;
@@ -89,6 +90,7 @@ lval* lval_qexpr(void) {
   return v;
 }
 
+// Func to delete an lval
 void lval_del(lval* v) {
 
   switch (v->type) {
@@ -108,6 +110,7 @@ void lval_del(lval* v) {
   free(v);
 }
 
+// Func to copy lval
 lval* lval_copy(lval* v) {
 
   lval* x = malloc(sizeof(lval));
@@ -142,6 +145,7 @@ lval* lval_copy(lval* v) {
   return x;
 }
 
+// Func to add an lval
 lval* lval_add(lval* v, lval* x) {
   v->count++;
   v->cell = realloc(v->cell, sizeof(lval*) * v->count);
@@ -149,6 +153,7 @@ lval* lval_add(lval* v, lval* x) {
   return v;
 }
 
+// Func to join two lvals
 lval* lval_join(lval* x, lval* y) {  
   for (int i = 0; i < y->count; i++) {
     x = lval_add(x, y->cell[i]);
@@ -158,6 +163,7 @@ lval* lval_join(lval* x, lval* y) {
   return x;
 }
 
+// Func to pop an lval
 lval* lval_pop(lval* v, int i) {
   lval* x = v->cell[i];  
   memmove(&v->cell[i], &v->cell[i+1],
@@ -167,6 +173,7 @@ lval* lval_pop(lval* v, int i) {
   return x;
 }
 
+// Func to ???
 lval* lval_take(lval* v, int i) {
   lval* x = lval_pop(v, i);
   lval_del(v);
