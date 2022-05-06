@@ -11,7 +11,6 @@ long eval_op(long x, char* op, long y) {
 }
 
 long eval(mpc_ast_t* t) {
-  
   /* If tagged as number return it directly. */ 
   if (strstr(t->tag, "number")) {
     return atoi(t->contents);
