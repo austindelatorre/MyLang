@@ -4,36 +4,30 @@
 
 #include <editline/readline.h>
 // #include <editline/history.h>
+// cc -std=c99 -Wall simpler_ffc.c -ledit -lm -o simpler_ffc
 
 
-typedef struct Op_elmt {
+
+typedef struct elmt {
   char* tag;
   char* contents;
-  struct Op_elmt** children;
-} op_elmt;
+  struct elmt** children;
+} elmt;
 
 
-op_elmt get_elmt(char* tag, char* contents, op_elmt** children) {
-  op_elmt
-}
 
+elmt read(char* input) {
+  char* tokens = strtok(input, " ");
 
-op_elmt read(char* input) {
-  char* token = strtok(input, " ");
-
-  while (token) {
-    printf("token: %s\n", token);
-
-    token = strtok(NULL, " ");
+  while (tokens) {
+    printf("token: %s\n", tokens);
+    tokens = strtok(NULL, " ");
   }
-}
 
+  struct elmt new = {"tag", "contents", NULL};
+  printf("token: %s\n", new.tag);
+  return new;
 
-int eval(char* input) {
-  
-
-
-  return 5;
 }
 
 int main(int argc, char** argv) {
@@ -51,8 +45,8 @@ int main(int argc, char** argv) {
     add_history(input);
 
     /* Echo input back to user */
-    int evaluation = eval(input);
-    printf("%d\n", evaluation);
+    read(input);
+    // printf("%d\n", evaluation);
 
     /* Free retrieved input */
     free(input);
